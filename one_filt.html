@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+<div>
+<h3> ACS/{{detector}} Zeropoints for {{filter}} on {{date}}.</h3>
+
+    <table>
+        <tr>
+            <td>FILTER</td>
+            <td>PHOTPLAM</td>
+            <td>PHOTFLAM</td>
+            <td>STmag</td>
+            <td>VEGAmag</td>
+            <td>ABmag</td>
+        </tr>
+        <tr>
+            <td>{{filter}}</td>
+            <td>{{calib[0]}}</td>
+            <td>{{calib[1]}}</td>
+            <td>{{calib[2]}}</td>
+            <td>{{calib[3]}}</td>
+            <td>{{calib[4]}}</td>
+        </tr>
+    </table>
+    <h4 style="color:red;"> Warnings: {{ warning }}
+</div>
+{% endblock %}

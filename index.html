@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div>
+    <div>
+        <h2>All Filters</h2>
+
+        <form action="{{ url_for('results_all') }}" method='GET'>
+            Date (YYYY-MM-DD):<input type ='text' name ='date' size='10'>
+            {% if error.date  %}
+                <p style="color: red;">{{error.date}}</p>
+            {% endif %}
+            </input>
+            <br>
+            {% if detector == 'WFC' or not detector %}
+                <input type='radio' name='detector' id='WFC' value ='WFC' checked>WFC
+            {% else %}
+                <input type='radio' name='detector' id='WFC' value ='WFC'>WFC
+            {% endif %}
+            <br>
+
+            {% if detector == 'HRC' %}
+                <input type='radio' name='detector' id='HRC' value ='HRC' checked>HRC</input>
+            {% else %}
+                <input type='radio' name='detector' id='HRC' value ='HRC'>HRC</input>
+            {% endif %}
+
+            <br>
+            {% if detector == 'SBC' %}
+                <input type='radio' name='detector' id='SBC' value='SBC' checked>SBC
+            {% else %}
+                <input type='radio' name='detector' id='SBC' value='SBC' >SBC
+            {% endif %}
+            <br>
+            <input type = 'submit' value = 'Calculate Zeropoints'>
+        </form>
+
+
+        <hr>
+
+        <h2> Single Filter</h2>
+
+        <form action="{{ url_for('results_single') }}" method='GET'>
+            Date (YYYY-MM-DD):<input type ='text' name ='date1' size='10' value='{{ formData.date }}'>
+            {% if error.date1  %}
+                <p style="color: red;">{{error.date1}}</p>
+            {% endif %}
+            <br>
+            <span>
+            {% if formData.detector == 'WFC' or not formData.detector %}
+                <input type='radio' name='detector' id='WFC' value ='WFC' checked>WFC
+            {% else %}
+                <input type='radio' name='detector' id='WFC' value ='WFC'>WFC
+            {% endif %}
+
+            <select name='WFC_filter'>
+                <option disabled selected value> -- select an option -- </option>
+                {% for filt in filter_list.WFC %}
+                    {% if formData.filter == filt and formData.detector == 'WFC'%}
+                        <option value = {{ filt }} selected> {{ filt }}</option>
+                    {% else %}
+                        <option value = {{ filt }}> {{ filt }} </option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+            </span>
+            <br>
+            <span>
+            {% if detector == 'HRC' %}
+                <input type='radio' name='detector' id='HRC' value ='HRC' checked>HRC
+            {% else %}
+                <input type='radio' name='detector' id='HRC' value ='HRC'>HRC
+            {% endif %}
+
+            <select name='HRC_filter'>
+                <option disabled selected value> -- select an option -- </option>
+                {% for filt in filter_list.HRC %}
+                    {% if formData.filter == filt and formData.detector == 'HRC'%}
+                        <option value = {{ filt }} selected> {{ filt }}</option>
+                    {% else %}
+                        <option value = {{ filt }}> {{ filt }} </option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+            </span>
+            <br>
+
+            {% if detector == 'SBC' %}
+                <input type='radio' name='detector' id='SBC' value='SBC' checked>SBC
+            {% else %}
+                <input type='radio' name='detector' id='SBC' value='SBC'>SBC
+            {% endif %}
+
+            <select name='SBC_filter'>
+                <option disabled selected value> -- select an option -- </option>
+                {% for filt in filter_list.SBC %}
+                    {% if formData.filter == filt %}
+                        <option value = {{ filt }} selected> {{ filt }}</option>
+                    {% else %}
+                        <option value = {{ filt }}> {{ filt }} </option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+            <br>
+            {% if error.filter  %}
+                <p style="color: red;">{{error.filter}}</p>
+            {% endif %}
+            <input type = 'submit' value = 'Calculate Zeropoints'>
+        </form>
+
+    </div>
+</div>
+
+{% endblock%}
